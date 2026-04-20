@@ -2053,9 +2053,11 @@ def _setup_feishu():
 
 def _setup_nim():
     """Configure NIM / NetEase IM via gateway setup."""
-    from hermes_cli.gateway import _setup_nim as _gateway_setup_nim
+    from hermes_cli import gateway as gateway_mod
 
-    _gateway_setup_nim()
+    gateway_mod.prompt = prompt
+    gateway_mod.prompt_yes_no = prompt_yes_no
+    gateway_mod._setup_nim()
 
 
 def _setup_wecom():
