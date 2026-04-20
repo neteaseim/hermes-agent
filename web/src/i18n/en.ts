@@ -226,6 +226,7 @@ export const en: Translations = {
       stt: "Speech-to-Text",
       logging: "Logging",
       discord: "Discord",
+      nim: "NeteaseIM",
       auxiliary: "Auxiliary",
     },
   },

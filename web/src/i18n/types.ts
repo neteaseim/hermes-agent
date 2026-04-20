@@ -235,6 +235,7 @@ export interface Translations {
       stt: string;
       logging: string;
       discord: string;
+      nim: string;
       auxiliary: string;
     };
   };

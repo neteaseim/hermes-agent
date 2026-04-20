@@ -750,6 +750,13 @@ DEFAULT_CONFIG = {
         "inline_shell_timeout": 10,
     },
 
+    # NetEase IM / NIM channel settings.
+    # Detailed multi-instance editing is primarily intended through config.yaml
+    # (or the dashboard Config page YAML editor), not the Env page.
+    "nim": {
+        "instances": [],
+    },
+
     # Honcho AI-native memory -- reads ~/.honcho/config.json as single source of truth.
     # This section is only needed for hermes-specific overrides; everything else
     # (apiKey, workspace, peerName, sessions, enabled) comes from the global config.
