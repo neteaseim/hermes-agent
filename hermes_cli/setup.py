@@ -2253,6 +2253,19 @@ def setup_gateway(config: dict):
         name, _env_var, setup_func = _GATEWAY_PLATFORMS[idx]
         setup_func()
 
+    # Some gateway setup flows persist config.yaml directly (for example NIM
+    # writes nim.instances). Re-sync the wizard's in-memory config so the
+    # final save_config(config) does not overwrite those changes with stale data.
+    _refreshed = load_config()
+    if "nim" in _refreshed:
+        config["nim"] = _refreshed["nim"]
+    else:
+        config.pop("nim", None)
+
+    nim_cfg = config.get("nim")
+    nim_instances = nim_cfg.get("instances", []) if isinstance(nim_cfg, dict) else []
+    nim_from_config = isinstance(nim_instances, list) and any(isinstance(item, dict) for item in nim_instances)
+
     # ── Gateway Service Setup ──
     any_messaging = (
         get_env_value("TELEGRAM_BOT_TOKEN")
@@ -2272,6 +2285,9 @@ def setup_gateway(config: dict):
         or get_env_value("BLUEBUBBLES_SERVER_URL")
         or get_env_value("QQ_APP_ID")
         or get_env_value("WEBHOOK_ENABLED")
+        or nim_from_config
+        or bool(get_env_value("NIM_INSTANCES"))
+        or all(get_env_value(var) for var in ("NIM_APP_KEY", "NIM_ACCOUNT", "NIM_TOKEN"))
     )
     if any_messaging:
         print()
