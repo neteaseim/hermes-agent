@@ -2235,9 +2235,7 @@ def setup_gateway(config: dict):
         if name == "Matrix" and not is_configured:
             is_configured = bool(get_env_value("MATRIX_PASSWORD"))
         if name == "NIM (NetEase IM)" and not is_configured:
-            is_configured = nim_from_config or bool(get_env_value("NIM_INSTANCES")) or all(
-                get_env_value(var) for var in ("NIM_APP_KEY", "NIM_ACCOUNT", "NIM_TOKEN")
-            )
+            is_configured = nim_from_config
         label = f"{name}  (configured)" if is_configured else name
         items.append(label)
         if is_configured:
@@ -2286,8 +2284,6 @@ def setup_gateway(config: dict):
         or get_env_value("QQ_APP_ID")
         or get_env_value("WEBHOOK_ENABLED")
         or nim_from_config
-        or bool(get_env_value("NIM_INSTANCES"))
-        or all(get_env_value(var) for var in ("NIM_APP_KEY", "NIM_ACCOUNT", "NIM_TOKEN"))
     )
     if any_messaging:
         print()
